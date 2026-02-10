@@ -1,0 +1,21 @@
+services:
+  basic_mobile_robot:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      DISPLAY: :1
+      UDEV: 1
+      TZ: Asia/Tokyo
+    devices:
+      - /dev/vchiq:/dev/vchiq
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+      - ./ros2_ws:/ros2_ws:cached
+      - ./basic_mobile_robot:/ros2_ws/src/basic_mobile_robot:cached
+      - ./.gazebo/models:/root/.gazebo/models  # キャッシュを永続化
+    command: sleep infinity
+    network_mode: host
+    init: true
+    privileged: true
+    tty: true
