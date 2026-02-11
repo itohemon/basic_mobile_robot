@@ -46,3 +46,6 @@ smalltown.worldに記載がある。
     </spherical_coordinates>
 ```
 
+### NavigationとSLAM
+ros-foxy-nav2-bringupパッケージが入ってない
+

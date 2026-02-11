@@ -9,6 +9,9 @@ RUN apt-get update -q && \
     apt-get autoremove && \
     rm -rf /var/lib/apt/lists/*
 
+RUN cd /root/ && \
+    git clone https://github.com/osrf/gazebo_models.git
+
 ENV ROS_DISTRO foxy
 
 # Add Package
@@ -19,6 +22,9 @@ RUN apt-get update && \
         ros-${ROS_DISTRO}-gazebo-ros-pkgs \
         ros-${ROS_DISTRO}-rqt-robot-steering \
         ros-${ROS_DISTRO}-robot-localization \
+        ros-${ROS_DISTRO}-nav2-bringup \
+        ros-${ROS_DISTRO}-navigation2 \
+        ros-${ROS_DISTRO}-slam-toolbox \
         python3-pip \
         gfortran \
         rtklib \
@@ -27,9 +33,6 @@ RUN apt-get update && \
     apt-get autoremove && \
     rm -rf /var/lib/apt/lists/*
 
-RUN cd /root/ && \
-    git clone https://github.com/osrf/gazebo_models.git
-    
 RUN echo 'export GAZEBO_MODEL_PATH=/usr/share/gazebo-11/models:/root/gazebo_models:/ros2_ws/src/basic_mobile_robot/models/'  >> /root/.bashrc && \
     echo "source /opt/ros/${ROS_DISTRO}/setup.bash" >> /root/.bashrc && \
     echo "source /ros2_ws/install/setup.bash" >> /root/.bashrc
