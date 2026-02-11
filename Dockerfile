@@ -9,13 +9,16 @@ RUN apt-get update -q && \
     apt-get autoremove && \
     rm -rf /var/lib/apt/lists/*
 
+ENV ROS_DISTRO foxy
+
 # Add Package
 RUN apt-get update && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y \
-        ros-foxy-joint-state-publisher-gui \
-        ros-foxy-xacro \
-        ros-foxy-gazebo-ros-pkgs \
-        ros-foxy-rqt-robot-steering \
+        ros-${ROS_DISTRO}-joint-state-publisher-gui \
+        ros-${ROS_DISTRO}-xacro \
+        ros-${ROS_DISTRO}-gazebo-ros-pkgs \
+        ros-${ROS_DISTRO}-rqt-robot-steering \
+        ros-${ROS_DISTRO}-robot-localization \
         python3-pip \
         gfortran \
         rtklib \
@@ -27,7 +30,6 @@ RUN apt-get update && \
 RUN cd /root/ && \
     git clone https://github.com/osrf/gazebo_models.git
     
-ENV ROS_DISTRO foxy
 RUN echo 'export GAZEBO_MODEL_PATH=/usr/share/gazebo-11/models:/root/gazebo_models:/ros2_ws/src/basic_mobile_robot/models/'  >> /root/.bashrc && \
     echo "source /opt/ros/${ROS_DISTRO}/setup.bash" >> /root/.bashrc && \
     echo "source /ros2_ws/install/setup.bash" >> /root/.bashrc
